@@ -1,7 +1,7 @@
 import { Server } from 'http'
 import * as socket from 'socket.io'
 
-export class Socket {
+export default class Socket {
   public io: socket.Server
 
   constructor(server: Server) {
@@ -23,4 +23,5 @@ export class Socket {
       console.info(`Socket disconnected : ${client.id}`)
     })
   }
+
 }

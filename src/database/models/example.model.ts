@@ -2,7 +2,7 @@ import { Document, Model, model, Schema } from 'mongoose'
 
 export interface IExample extends Document {
   name: string
-  creted: Date
+  created: Date
 }
 
 export let ExampleSchema: Schema = new Schema({
