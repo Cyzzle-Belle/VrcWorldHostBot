@@ -10,8 +10,19 @@ Configuration is handled through a Dot ENV file. In the root, edit the `.env` fi
 - PORT: Port that the Express server is running on
 
 # Commands
-`npm run dev` This handles it all right now.
-TODO: Add lines for the other commands
+`npm run \[task\]`
+- `dev`: Kills running instances, builds and runs
+- `debug`: Kills running instances, builds, runs, and starts an inspector service (https://nodejs.org/en/docs/inspector)
+- `test:watch`: Kills running instances, builds, runs, and watches for *.js changes
+- `test`: Runs the Mocha tests
+- `build`: Builds the Typescript
+- `start`: Starts the app
+- `docker:build`: Builds docker image for app
+- `docker:compose`: Starts up app Docker instance and MongoDB Docker instance
+- `format`: Formats the code
+- `lint`: Lints app code
+- `lint:test`: Lints tests code
+- `format:test`: Formats tests code
 
 ## Features
 ### Friend Requests
@@ -19,11 +30,11 @@ TODO: Add lines for the other commands
 At this time, the bot will automatically accept all requests sent to it.
 TODO: Interface with some method of administrating who the bot will accept requests from.
 
-### Requet Invites
+### Request Invites
 
 The bot will accept all requests at this time.
 At this time, the bot will automatically accept all requests sent to it.
-TODO: 
+TODO:
 - Interface with some method of administrating who the bot will accept requests from.
 - Possibly add a tagging/role system so that only certain groups can join.
 
@@ -34,6 +45,6 @@ The bot is currently running an Express server. No endpoints are currently setup
 
 ### Further Spiking
 #### World Auto Creation
-Would be nice to automate the world that he Bot's client joins. This can be done via a VRChat launch URL. Need to look into the instance ID (before the tilda). From initial attempts, it looks like VRChat will accept a random number there.  
+Would be nice to automate the world that he Bot's client joins. This can be done via a VRChat launch URL. Need to look into the instance ID (before the tilda). From initial attempts, it looks like VRChat will accept a random number there.
 https://vrchat.com/home/launch?worldId=wrld_0b4e5774-473d-4943-bb22-aac0c1b706f3&instanceId=26824\~private(usr_a4cd0d89-f1e1-4fbf-80df-21f28b788887)~nonce(3e5e8625-0a65-4643-8ecb-015fe6451d19)
 Also need to consider what happens if the Bot's client drops from the world. How would rejoining work?

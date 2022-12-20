@@ -1,3 +1,7 @@
+# OS & IDE
+.idea
+.vscode
+
 node_modules/*
 npm-debug.log
 .tscache

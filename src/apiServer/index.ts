@@ -1,13 +1,15 @@
-import * as bodyParser from 'body-parser'
 import * as cookieParser from 'cookie-parser'
 import * as express from 'express'
 import * as logger from 'morgan'
 import * as path from 'path'
 
-import { DB, MODELS_DIR, ROUTES_DIR } from '../var/config'
-import { globFiles } from '../helpers'
+import { DB, MODELS_DIR, ROUTES_DIR, db, log } from '../var/config'
+import { globFiles } from './helpers'
 import connect from '../database'
-import * as notSer from '../services/notificationHandler';
+import '../logger'
+
+db || DB && connect(DB)
+log || logger;
 
 const app: express.Express = express()
 
@@ -17,14 +19,12 @@ for (const model of globFiles(MODELS_DIR)) {
 
 DB && connect(DB)
 
-notSer.default();
-
 app.set('views', path.join(__dirname, '../../src/views'))
 app.set('view engine', 'pug')
 
 app.use(logger('dev'))
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(express.json())
+app.use(express.urlencoded())
 app.use(cookieParser())
 app.use(express.static(path.join(__dirname, '../../src/public')))
 

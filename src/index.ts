@@ -1,33 +1,51 @@
 require('dotenv').config()
 import * as http from 'http'
-import { DB, PORT } from './var/config'
-import { Socket } from './socket/index'
-import app from './server'
+import Socket from './socket'
+import * as config from './var/config'
+import ApiServer from './apiServer'
+import DiscordBot from './discordBot'
+import VRCNotificationHandler from './notificationHandler'
 
-const server: http.Server = http.createServer(app)
-const socket = new Socket(server)
+let apiServer = { server:null,socket:null }
+let discordBot;
+let notificationHandler;
 
-server.listen(PORT)
+if (config.FEATURES_LIST.includes(config.FEATURE.API)) {
+	const server: http.Server = http.createServer(ApiServer)
+	const socket = new Socket(server)
 
-server.on('error', (e: Error) => {
-  console.log('Error starting server' + e)
-})
+	server.listen(config.PORT)
 
-server.on('listening', () => {
-  if (DB) {
-    console.log(
-      `Server started on port ${PORT} on env ${process.env.NODE_ENV ||
-        'dev'} dbcon ${DB}`,
-    )
-  } else {
-    console.log(
-      `Server started on port ${PORT} on env ${process.env.NODE_ENV ||
-        'dev'}`,
-    )
-  }
-})
+	server.on('error', (e: Error) => {
+	  console.log('Error starting server' + e)
+	})
+
+	server.on('listening', () => {
+	  if (config.DB) {
+		console.log(
+		  `Server started on port ${config.PORT} on env ${process.env.NODE_ENV ||
+			'dev'} dbcon ${config.DB}`,
+		)
+	  } else {
+		console.log(
+		  `Server started on port ${config.PORT} on env ${process.env.NODE_ENV ||
+			'dev'}`,
+		)
+	  }
+	})
+
+    apiServer.server = server
+    apiServer.socket = socket
+}
+if (config.FEATURES_LIST.includes(config.FEATURE.VRCNOTIFICATIONS)) {
+	notificationHandler = VRCNotificationHandler;
+}
+if (config.FEATURES_LIST.includes(config.FEATURE.DISCORD)) {
+	discordBot = DiscordBot();
+}
 
 export default {
-  server,
-  socket,
-}
+ 	apiServer,
+	discordBot,
+	notificationHandler,
+ }

@@ -1,6 +1,5 @@
 import VrcApi from '..'
 
-
 export default class ApiModule {
   private vrc: VrcApi
 
